@@ -9,6 +9,7 @@ services:
       MYSQL_DATABASE: iot_data_db
     volumes:
       - db_data:/var/lib/mysql
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3308:3306"
 
