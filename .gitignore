@@ -1,0 +1,16 @@
+# Ignore environment and dependency directories
+venv/
+node_modules/
+
+# Ignore Python cache files
+*.pyc
+__pycache__/
+
+# Ignore log files
+*.log
+
+# Ignore Docker files
+*.log
+
+# Ignore .env files
+.env
