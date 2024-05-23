@@ -1,0 +1,15 @@
+# Utiliza a imagem oficial do Python como base
+FROM python:3.9-slim
+
+# Define o diretório de trabalho dentro do container
+WORKDIR /app
+
+# Copia os arquivos de requisitos e instala as dependências
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia o script de simulação para o container
+COPY simulate_devices.py .
+
+# Comando para rodar o script de simulação
+CMD ["python", "simulate_devices.py"]

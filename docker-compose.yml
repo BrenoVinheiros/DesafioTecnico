@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: segunda9
+      MYSQL_DATABASE: iot_data_db
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3308:3306"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_HOST=mysql
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=segunda9
+      - DATABASE_DB=iot_data_db
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  simulator:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.simulator
+    container_name: simulator
+    environment:
+      - DATABASE_HOST=mysql
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=segunda9
+      - DATABASE_DB=iot_data_db
+    depends_on:
+      - mysql
+      - backend
+
+volumes:
+  db_data:
